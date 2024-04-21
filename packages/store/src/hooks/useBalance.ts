@@ -1,7 +1,7 @@
 import { useRecoilValue } from "recoil"
-import { balanceAtom } from "../atom/balance"
+import { balanceAtom } from "../atoms/balance"
 
 export const useBalance = () => {
     const value = useRecoilValue(balanceAtom);
     return value;
-}   
+}
