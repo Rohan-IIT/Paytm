@@ -20,16 +20,6 @@ export const Appbar = ({
         </div>
         <div className="flex flex-col justify-center pt-2">
             <Button onClick={user ? onSignout : onSignin}>{user ? "Logout" : "Login"}</Button>
-
-            {user ? (
-                    <div>
-                        <span>Welcome, {user.name}</span>
-                        <Button onClick={onSignout}>Logout</Button>
-                    </div>
-                ) : (
-                    <Button onClick={onSignin}>Login</Button>
-                )}
-                
         </div>
     </div>
 }
