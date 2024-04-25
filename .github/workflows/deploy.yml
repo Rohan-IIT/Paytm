@@ -39,8 +39,3 @@ jobs:
     - name: Connect to EC2 and Deploy
       run: |
         ssh -i ~/.ssh/id_rsa ubuntu@ec2-3-138-35-233.us-east-2.compute.amazonaws.com 'bash -s' < your_deploy_script.sh
-      script: |
-        sudo docker pull rohan9823/paytm:latest
-        sudo docker stop web-app || true
-        sudo docker rm web-app || true
-        sudo docker run -d --name web-app -p 3005:3000 rohan9823/paytm:latest 
