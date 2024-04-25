@@ -29,13 +29,15 @@ jobs:
     - name: Verify Pushed Image
       run: docker pull rohan9823/paytm:latest  # Replace with your Docker Hub username and repository
 
-    - name: Set up SSH key
-      run: |
-        mkdir -p ~/.ssh
-        echo "${{ secrets.SSH_KEY }}" > ~/.ssh/id_rsa
-        chmod 600 ~/.ssh/id_rsa
-        ssh-keyscan -H ec2-3-138-35-233.us-east-2.compute.amazonaws.com >> ~/.ssh/known_hosts
+    - name: Deploy to EC2
+      uses: appleboy/ssh-action@master
+      with:
+        host: ec2-52-14-51-200.us-east-2.compute.amazonaws.com
+        username: ${{ secrets.SSH_USERNAME }}
+        key: ${{ secrets.NEWSSH }}
+        script: |
+          sudo docker pull rohan9823/paytm:latest
+          sudo docker stop web-app || true
+          sudo docker rm web-app || true
+          sudo docker run -d --name web-app -p 3005:3000 rohan9823/paytm:latest
 
-    - name: Connect to EC2 and Deploy
-      run: |
-        ssh -i ~/.ssh/id_rsa ubuntu@ec2-3-138-35-233.us-east-2.compute.amazonaws.com 'bash -s' < your_deploy_script.sh
